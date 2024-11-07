@@ -3,12 +3,10 @@ from openai import OpenAI
 import os
 
 
-
-
 @click.command()
 @click.option('--role', type=click.Choice(['system', 'assistant', 'user'], case_sensitive=False),
-              help='The role of the message sender.')
-@click.option('--content', prompt='Message content', help='The content of the message.')
+              help='The role of the message sender.', required=True)
+@click.option('--content', prompt='Message content', help='The content of the message.', required=True)
 def query_openai(role, content):
     """
     CLI tool to query OpenAI's chat completion endpoint.
@@ -28,25 +26,17 @@ def query_openai(role, content):
     }
 
     # Make the API call
-    try:
-        client = OpenAI(
-            # This is the default and can be omitted
-            api_key=os.environ.get("OPENAI_API_KEY"),
-        )
+    client = OpenAI(
+        # This is the default and can be omitted
+        api_key=os.environ.get("OPENAI_API_KEY"),
+    )
 
-        response=client.chat.completions.create(
-                model="gpt-3.5-turbo",  # Or any available model
-                messages=[message]
-        )
-        # Print out the assistant's response
-        if response and response['choices']:
-            choice = response['choices'][0]
-            assistant_message = choice['message']['content']
-            click.echo(f"Assistant: {assistant_message}")
-        else:
-            click.echo("No response from model.")
-    except Exception as e:
-        click.echo(f"Error querying OpenAI: {e}")
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",  # Or any available model
+        messages=[message]
+    )
+
+    print(response)
 
 
 if __name__ == '__main__':
