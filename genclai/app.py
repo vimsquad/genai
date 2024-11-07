@@ -36,7 +36,7 @@ def query_openai(role, content):
         messages=[message]
     )
 
-    print(response)
+    print(response.choices[0].message.content)
 
 
 if __name__ == '__main__':
