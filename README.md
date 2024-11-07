@@ -13,6 +13,8 @@ pip install .
 ## Usage
 
 ```bash
+export OPENAI_API_KEY="****"
+
 genclai --role <role> --content '<content>'
 ```
 
@@ -24,5 +26,7 @@ genclai --role <role> --content '<content>'
 ### Example
 
 ```bash
+export OPENAI_API_KEY="****"
+
 genclai --role user --content 'How do you train a dog not to pull on a leash?'
 ```
